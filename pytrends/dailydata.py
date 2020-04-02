@@ -90,7 +90,7 @@ def get_daily_data(word: str,
     """
 
     # Set up start and stop dates
-    start_date = date(start_year, start_mon, 1) 
+    start_date = date(start_year, start_mon, 1)
     stop_date = get_last_date_of_month(stop_year, stop_mon)
 
     # Start pytrends for US region
@@ -116,7 +116,11 @@ def get_daily_data(word: str,
         current = last_date_of_month + timedelta(days=1)
         sleep(wait_time)  # don't go too fast or Google will send 429s
 
-    daily = pd.concat(results.values()).drop(columns=['isPartial'])
+    daily = pd.concat(results.values())
+    try:
+        daily = daily.drop(columns=['isPartial'])
+    except Exception as err:
+        print('Error %s, ignoring' % err)
     complete = daily.join(monthly, lsuffix='_unscaled', rsuffix='_monthly')
 
     # Scale daily data by monthly weights so the data is comparable
