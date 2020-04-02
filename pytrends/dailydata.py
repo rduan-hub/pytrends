@@ -119,8 +119,8 @@ def get_daily_data(word: str,
     daily = pd.concat(results.values())
     try:
         daily = daily.drop(columns=['isPartial'])
-    except Exception as err:
-        print('Error %s, ignoring' % err)
+    except Exception:
+        print('Error occured, ignoring')
     complete = daily.join(monthly, lsuffix='_unscaled', rsuffix='_monthly')
 
     # Scale daily data by monthly weights so the data is comparable
