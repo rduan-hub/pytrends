@@ -94,7 +94,7 @@ def get_daily_data(word: str,
     stop_date = get_last_date_of_month(stop_year, stop_mon)
 
     # Start pytrends for US region
-    pytrends = TrendReq(hl='en-US', tz=360)
+    pytrends = TrendReq(hl='en-US', tz=360, timeout=(20, 50))
     # Initialize build_payload with the word we need data for
     build_payload = partial(pytrends.build_payload,
                             kw_list=[word], cat=0, geo=geo, gprop='')
